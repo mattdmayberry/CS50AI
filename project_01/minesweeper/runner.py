@@ -62,7 +62,7 @@ while True:
     if instructions:
 
         # Title
-        title = largeFont.render("Play minesweeper", True, WHITE)
+        title = largeFont.render("Play Minesweeper", True, WHITE)
         titleRect = title.get_rect()
         titleRect.center = ((width / 2), 50)
         screen.blit(title, titleRect)
