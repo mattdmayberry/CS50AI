@@ -3,7 +3,7 @@ import random
 import copy
 
 
-class Minesweeper():
+class Minesweeper:
     """
     Minesweeper game representation
     """
@@ -85,7 +85,7 @@ class Minesweeper():
         return self.mines_found == self.mines
 
 
-class Sentence():
+class Sentence:
     """
     Logical statement about a Minesweeper game
     A sentence consists of a set of board cells,
@@ -138,7 +138,7 @@ class Sentence():
             pass
 
 
-class MinesweeperAI():
+class MinesweeperAI:
     """
     Minesweeper game player
     """
@@ -192,7 +192,6 @@ class MinesweeperAI():
             5) add any new sentences to the AI's knowledge base
                if they can be inferred from existing knowledge
         """
-
         # mark the cell as one of the moves made in the game
         self.moves_made.add(cell)
 
@@ -213,18 +212,7 @@ class MinesweeperAI():
 
         if len(new_sentence.cells) > 0:  # add that sentence to knowledge only if it is not empty
             self.knowledge.append(new_sentence)
-            # print(f"Adding new sentence: {new_sentence}")
-
-        # # print("Printing knowledge:")
-        # for sent in self.knowledge:
-        #     # print(sent)
-
-        # check sentences for new cells that could be marked as safe or as mine
         self.check_knowledge()
-        # print(f"Safe cells: {self.safes - self.moves_made}")
-        # print(f"Mine cells: {self.mines}")
-        # print("------------")
-
         self.extra_inference()
 
     def return_close_cells(self, cell):
@@ -245,14 +233,15 @@ class MinesweeperAI():
         """
         # copies the knowledge to operate on copy
         knowledge_copy = copy.deepcopy(self.knowledge)
-        # iterates through sentences
 
+        # iterates through sentences
         for sentence in knowledge_copy:
             if len(sentence.cells) == 0:
                 try:
                     self.knowledge.remove(sentence)
                 except ValueError:
                     pass
+
             # check for possible mines and safes
             mines = sentence.known_mines()
             safes = sentence.known_safes()
@@ -260,12 +249,10 @@ class MinesweeperAI():
             # update knowledge if mine or safe was found
             if mines:
                 for mine in mines:
-                    # print(f"Marking {mine} as mine")
                     self.mark_mine(mine)
                     self.check_knowledge()
             if safes:
                 for safe in safes:
-                    # print(f"Marking {safe} as safe")
                     self.mark_safe(safe)
                     self.check_knowledge()
 
@@ -285,18 +272,10 @@ class MinesweeperAI():
                     safes = new_sentence.known_safes()
                     if mines:
                         for mine in mines:
-                            # print(f"Used inference to mark mine: {mine}")
-                            # print(f"FinalSen: {new_sentence}")
-                            # print(f"Sent1: {sent1copy}")
-                            # print(f"Sent2: {sent2copy}")
                             self.mark_mine(mine)
 
                     if safes:
                         for safe in safes:
-                            # print(f"Used inference to mark safe: {safe}")
-                            # print(f"FinalSen: {new_sentence}")
-                            # print(f"Sent1: {sent1copy}")
-                            # print(f"Sent2: {sent2copy}")
                             self.mark_safe(safe)
 
     def make_safe_move(self):
@@ -309,10 +288,7 @@ class MinesweeperAI():
         and self.moves_made, but should not modify any of those values.
         """
         for i in self.safes - self.moves_made:
-            # choose first safe cell that wasn't picked before
-            # print(f"Making {i} move")
             return i
-
         return None
 
     def make_random_move(self):
@@ -322,16 +298,11 @@ class MinesweeperAI():
             1) have not already been chosen, and
             2) are not known to be mines
         """
-
         maxmoves = self.width * self.height
-
         while maxmoves > 0:
             maxmoves -= 1
-
             row = random.randrange(self.height)
             column = random.randrange(self.width)
-
             if (row, column) not in self.moves_made | self.mines:
                 return (row, column)
-
         return None
