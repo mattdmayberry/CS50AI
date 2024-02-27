@@ -4,7 +4,7 @@ import random
 
 class Minesweeper:
     """
-    minesweeper game representation
+    Minesweeper game representation
     """
 
     def __init__(self, height=8, width=8, mines=8):
@@ -86,7 +86,7 @@ class Minesweeper:
 
 class Sentence:
     """
-    Logical statement about a minesweeper game
+    Logical statement about a Minesweeper game
     A sentence consists of a set of board cells,
     and a count of the number of those cells which are mines.
     """
@@ -137,7 +137,7 @@ class Sentence:
 
 class MinesweeperAI:
     """
-    minesweeper game player
+    Minesweeper game player
     """
 
     def __init__(self, height=8, width=8):
@@ -157,7 +157,7 @@ class MinesweeperAI:
 
     def add_knowledge(self, cell, count):
         """
-        Called when the minesweeper board tells us, for a given
+        Called when the Minesweeper board tells us, for a given
         safe cell, how many neighboring cells have mines in them.
 
         This function should:
@@ -216,7 +216,7 @@ class MinesweeperAI:
 
     def make_safe_move(self):
         """
-        Returns a safe cell to choose on the minesweeper board.
+        Returns a safe cell to choose on the Minesweeper board.
         The move returned must be known to be safe, and not already a move
         that has been made.
 
@@ -230,7 +230,7 @@ class MinesweeperAI:
 
     def make_random_move(self):
         """
-        Returns a move to make on the minesweeper board.
+        Returns a move to make on the Minesweeper board.
         Should choose randomly among cells that:
             1) have not already been chosen, and
             2) are not known to be mines
