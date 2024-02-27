@@ -41,17 +41,63 @@ knowledge2 = And(
 # B says "C is a knave."
 # C says "A is a knight."
 
-#     A is a Knave
-#     B is a Knight
-#     C is a Knave
-
-#todo update logic
-
 knowledge3 = And(
-    And(Or(AKnight, AKnave), Or(BKnight, BKnave), Or(CKnight, CKnave)), # A, B, and C can be either knights or knaves
-    Biconditional(And(AKnave, CKnave), BKnight), # If A and C are knaves, B is a knight
-    Biconditional(And(AKnave, BKnave), AKnight), # If A and B are knaves, A is a knight
-    Implication(AKnave, CKnave) # If A is a knave then C is a knave
+    Not(And(AKnight, AKnave)),  # A cannot be knight and knave at the same time
+    Or(AKnight, AKnave),  # A will be Knight or Knave
+
+    Not(And(BKnight, BKnave)),  # B cannot be knight and knave at the same time
+    Or(BKnight, BKnave),  # B will be Knight or Knave
+
+    Not(And(CKnight, CKnave)),  # C cannot be knight and knave at the same time
+    Or(CKnight, CKnave),  # C will be Knight or Knave
+
+    # A says either "I am a knight." or "I am a knave.", but you don't know which.
+    Or(
+        # "I am a knight."
+        And(
+            Implication(AKnight, AKnight),
+            Implication(AKnave, Not(AKnight))
+        ),
+
+        # "I am a knave."
+        And(
+            Implication(AKnight, AKnave),
+            Implication(AKnave, Not(AKnave))
+        )
+    ),
+
+    Not(And(
+        # "I am a knight."
+        And(
+            Implication(AKnight, AKnight),
+            Implication(AKnave, Not(AKnight))
+        ),
+
+        # "I am a knave."
+        And(
+            Implication(AKnight, AKnave),
+            Implication(AKnave, Not(AKnave))
+        )
+    )),
+
+    # B says "A said 'I am a knave'."
+    Implication(BKnight, And(
+        Implication(AKnight, AKnave),
+        Implication(AKnave, Not(AKnave))
+    )),
+
+    Implication(BKnave, Not(And(
+        Implication(AKnight, AKnave),
+        Implication(AKnave, Not(AKnave))
+    ))),
+
+    # B says "C is a knave."
+    Implication(BKnight, CKnave),
+    Implication(BKnave, Not(CKnave)),
+
+    # C says "A is a knight."
+    Implication(CKnight, AKnight),
+    Implication(CKnave, Not(AKnight))
 )
 
 
